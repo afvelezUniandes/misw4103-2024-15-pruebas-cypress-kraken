@@ -6,13 +6,16 @@ cypress/logs/
 cypress/downloads/
 
 # Ignorar archivos y directorios generados por Kraken
-kraken/reports/
-kraken/logs/
-kraken/screenshots/
-kraken/videos/
+reports/
+logs/
+screenshots/
+videos/
+.kraken/
 
 # Ignorar node_modules
 node_modules/
 
 # Ignorar archivos de entorno
 .env
+
+.DS_Store

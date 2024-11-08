@@ -26,6 +26,7 @@ Este repositorio contiene pruebas automatizadas utilizando Cypress y Kraken.
 ### Configuración
 
 Cypress está configurado en el directorio `cypress`. Puedes encontrar los archivos de configuración en `cypress.json`.
+Kraken está configurado en el directorio `features`. Puedes encontrar los archivos de configuracion en `properties.json`
 
 ### Ejecución de Pruebas
 
@@ -33,4 +34,10 @@ Para ejecutar las pruebas de Cypress, utiliza el siguiente comando:
 
 ```bash
 npx cypress open
+```
+
+Para ejecutar las pruebas de Kraken, utiliza el siguiente comando:
+
+```bash
+npx kraken-node run
 ```
