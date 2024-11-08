@@ -83,6 +83,7 @@ describe("Pruebas de post", () => {
   it("Ver post publicado en frontend", () => {
     cy.visit("/ghost/#/posts");
     cy.contains("Post en Borrador").click();
+    cy.wait(1000);
     cy.get('button[data-test-button="publish-preview"]')
       .contains("Preview")
       .click();
@@ -91,5 +92,12 @@ describe("Pruebas de post", () => {
       const $body = $iframe.contents().find("body");
       cy.wrap($body).contains("Post en Borrador");
     });
+
+    cy.visit("/ghost/#/posts");
+    cy.contains("Post en Borrador").click();
+    cy.get("button[data-test-psm-trigger]").click();
+    cy.get('button[data-test-button="delete-post"]').click();
+    cy.get('button[data-test-button="delete-post-confirm"]').click();
+    cy.contains("Post en Borrador").should("not.exist");
   });
 });
