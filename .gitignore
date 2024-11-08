@@ -1,0 +1,18 @@
+# Ignorar archivos y directorios generados por Cypress
+cypress/screenshots/
+cypress/videos/
+cypress/reports/
+cypress/logs/
+cypress/downloads/
+
+# Ignorar archivos y directorios generados por Kraken
+kraken/reports/
+kraken/logs/
+kraken/screenshots/
+kraken/videos/
+
+# Ignorar node_modules
+node_modules/
+
+# Ignorar archivos de entorno
+.env
