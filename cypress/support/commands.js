@@ -1,25 +1,15 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+// Comando para inicio de sesión válido
+Cypress.Commands.add("login", (email, password) => {
+  cy.visit("/ghost/#/signin");
+  cy.get('input[name="identification"]').type(email);
+  cy.get('input[name="password"]').type(password);
+  cy.get('button[type="submit"]').click();
+  cy.url().should("include", "/ghost/#/dashboard");
+});
+
+// Comando para cerrar sesión
+Cypress.Commands.add("logout", () => {
+  cy.get(".gh-user-avatar").click();
+  cy.get("a.user-menu-signout").click();
+  cy.url().should("include", "/ghost/#/signin");
+});
