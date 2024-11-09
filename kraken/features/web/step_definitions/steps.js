@@ -97,6 +97,9 @@ When(/^I click on the link with text "([^"]*)"$/, async function (linkText) {
       case "Publish post, right now":
           element = await this.driver.$('[data-test-button="confirm-publish"]');
           break;
+      case "Ver preview post":
+          element = await this.driver.$('[data-test-button="publish-preview"]');
+          break;
       default:
           element = await this.driver.$(`//*[contains(text(), "${linkText}")]`);
   }
@@ -164,4 +167,25 @@ Then(/^the post "([^"]*)" should not be present in the post list$/, async functi
   return true;
 });
 
-/* FIN LISTADO DE STEPS PARA FUNCIONALIDAD DE POSTS*/
+Then(/^I should see the preview title "([^"]*)"$/, async function (expectedTitle) {
+  await this.driver.pause(2000);
+  
+  const iframe = await this.driver.$('.gh-pe-iframe');
+  await this.driver.switchToFrame(iframe);
+  
+  try {
+      const titleElement = await this.driver.$('h1.gh-article-title.is-title');
+      const actualTitle = await titleElement.getText();
+      
+      if (actualTitle !== expectedTitle) {
+          throw new Error(`El título en el preview "${actualTitle}" no coincide con el esperado "${expectedTitle}"`);
+      }
+  } finally {
+      await this.driver.switchToParentFrame();
+  }
+  
+  return true;
+});
+
+
+/* FIN LISTADO DE STEPS PARA FUNCIONALIDAD DE POSTS*/ 

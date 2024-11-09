@@ -122,3 +122,26 @@
     And I wait for 2 seconds
     Then the post "Nuevo post draft" should be present in the post list
     And I wait for 2 seconds
+
+  @user6 @web
+  Scenario: Previsualización de un post
+    Given I navigate to page "<URL_DASHBOARD>"
+    And I wait for 1 seconds
+    And I enter email "<USERNAME>"
+    And I enter password "<PASSWORD>"
+    And I click next
+    And I wait for 1 seconds
+    And I navigate to page "<URL_DASHBOARD>"
+    And I wait for 1 seconds
+    And I click on the link with text "Posts"
+    And I wait for 1 seconds
+    When I click on the link with text "New post"
+    And I wait for 1 seconds
+    And I enter post name "Esto es un post para probar el preview del mismo"
+    And I enter post description "Esto es una prueba de un post"
+    And I click on the link with text "Ver preview post"
+    And I wait for 2 seconds
+    Then I should see the preview title "Esto es un post para probar el preview del mismo"
+    And I wait for 1 seconds
+
+  
