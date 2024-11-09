@@ -100,6 +100,12 @@ When(/^I click on the link with text "([^"]*)"$/, async function (linkText) {
       case "Ver preview post":
           element = await this.driver.$('[data-test-button="publish-preview"]');
           break;
+      case "opciones de cuando publicar":
+          element = await this.driver.$('[data-test-setting="publish-at"] button');
+          break;
+      case "programar para publicar luego":
+          element = await this.driver.$('.gh-publish-schedule .gh-radio:last-child');
+          break;
       default:
           element = await this.driver.$(`//*[contains(text(), "${linkText}")]`);
   }
@@ -187,5 +193,21 @@ Then(/^I should see the preview title "([^"]*)"$/, async function (expectedTitle
   return true;
 });
 
+When(/^the post "([^"]*)" should be present in the post schedule list$/, async function (postName) {
+  await this.driver.pause(2000);
+
+  const posts = await this.driver.$$('.gh-posts-list-item-group .gh-content-entry-title');
+
+  const titlesFound = await Promise.all(posts.map(async (titleElement) => {
+      const titleText = await titleElement.getText();
+      return titleText === postName;
+  }));
+
+  if (!titlesFound.includes(true)) {
+      throw new Error(`El post "${postName}" no está presente en la lista.`);
+  }
+
+  return true;
+});
 
 /* FIN LISTADO DE STEPS PARA FUNCIONALIDAD DE POSTS*/ 

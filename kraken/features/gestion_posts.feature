@@ -143,5 +143,33 @@
     And I wait for 2 seconds
     Then I should see the preview title "Esto es un post para probar el preview del mismo"
     And I wait for 1 seconds
+  
+  @user7 @web
+  Scenario: Programación de publicación
+    Given I navigate to page "<URL_DASHBOARD>"
+    And I wait for 1 seconds
+    And I enter email "<USERNAME>"
+    And I enter password "<PASSWORD>"
+    And I click next
+    And I wait for 1 seconds
+    And I navigate to page "<URL_DASHBOARD>"
+    And I wait for 1 seconds
+    And I click on the link with text "Posts"
+    And I wait for 1 seconds
+    When I click on the link with text "New post"
+    And I wait for 1 seconds
+    And I enter post name "Nuevo post programado"
+    And I enter post description "Esto es una prueba de un post programado"
+    And I click on the link with text "Publish"
+    And I wait for 1 seconds
+    And I click on the link with text "opciones de cuando publicar"
+    And I click on the link with text "programar para publicar luego"
+    And I click on the link with text "Continue, final review"
+    And I click on the link with text "Publish post, right now"
+    And I navigate to page "<URL_POST_SCHEDULED>"
+    And I wait for 2 seconds
+    Then the post "Nuevo post programado" should be present in the post schedule list
+    And I wait for 1 seconds  
+  
 
   
