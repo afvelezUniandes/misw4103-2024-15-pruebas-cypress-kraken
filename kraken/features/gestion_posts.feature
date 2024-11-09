@@ -1,7 +1,7 @@
   
   Feature: Gestión de Posts
   
-  @user4 @web
+  @user1 @web
   Scenario: Creación de nuevo post
     Given I navigate to page "<URL_DASHBOARD>"
     And I wait for 1 seconds
