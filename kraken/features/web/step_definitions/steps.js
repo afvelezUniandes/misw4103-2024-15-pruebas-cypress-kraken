@@ -106,6 +106,21 @@ When(/^I click on the link with text "([^"]*)"$/, async function (linkText) {
       case "programar para publicar luego":
           element = await this.driver.$('.gh-publish-schedule .gh-radio:last-child');
           break;
+      case "Pages":
+          element = await this.driver.$('[data-test-nav="pages"]');
+          break;
+      case "Nueva pagina":
+          element = await this.driver.$('[data-test-new-page-button]');
+          break;
+      case "Publish pagina":
+          element = await this.driver.$('[data-test-button="publish-flow"]');
+          break;
+      case "Continue, final review pagina":
+          element = await this.driver.$('[data-test-button="continue"]');
+          break;
+      case "Publish page, right now pagina":
+          element = await this.driver.$('[data-test-button="confirm-publish"]');
+          break;
       default:
           element = await this.driver.$(`//*[contains(text(), "${linkText}")]`);
   }
@@ -132,7 +147,7 @@ When('I click settings', async function() {
   return await element.click();
 })
 
-/*----------------validacion que los post esten en el listado d ePosts---------------*/
+/*----------------validacion que los post esten en el listado de Posts---------------*/
 When(/^the post "([^"]*)" should be present in the post list$/, async function (tagName) {
   const tagList = await this.driver.$$('.posts-list');
 
@@ -211,3 +226,35 @@ When(/^the post "([^"]*)" should be present in the post schedule list$/, async f
 });
 
 /* FIN LISTADO DE STEPS PARA FUNCIONALIDAD DE POSTS*/ 
+
+/*---------------STEPS PARA PAGES------------------------------
+/*----------Creacion de Pages---------------------*/
+
+When('I enter page name {kraken-string}', async function (pageName) {
+  let element = await this.driver.$('textarea[data-test-editor-title-input]');
+  return await element.setValue(pageName);
+});
+
+When('I enter page description {kraken-string}', async function (description) {
+  let element = await this.driver.$('.kg-prose[contenteditable="true"]');
+  return await element.setValue(description);
+});
+
+/*----------------validacion que los post esten en el listado de Posts---------------*/
+Then(/^the page "([^"]*)" should be present in the page list$/, async function (pageName) {
+  await this.driver.pause(2000);
+
+  const pages = await this.driver.$$('.gh-list-row h3.gh-content-entry-title');
+
+  const pagesFound = await Promise.all(pages.map(async (titleElement) => {
+      const titleText = await titleElement.getText();
+      return titleText === pageName;
+  }));
+
+  if (!pagesFound.includes(true)) {
+      throw new Error(`La página "${pageName}" no está presente en la lista.`);
+  }
+
+  return true;
+});
+/* FIN LISTADO DE STEPS PARA FUNCIONALIDAD DE PAGES*/ 
