@@ -65,7 +65,7 @@ When(/^I click on the link with text "([^"]*)"$/, async function (linkText) {
   let element;
   switch(linkText) {
       case "Posts":
-          element = await this.driver.$('#ember19.ember-view[data-test-nav="posts"]');
+          element = await this.driver.$('[data-test-nav="posts"]');
           break;
       case "obtener primer post":
           element = await this.driver.$('.gh-posts-list-item-group .gh-posts-list-item a.gh-list-data.gh-post-list-title');
@@ -89,8 +89,8 @@ When(/^I click on the link with text "([^"]*)"$/, async function (linkText) {
           element = await this.driver.$('[data-test-button="publish-save"]');
           break;
       case "Publish":
-        element = await this.driver.$('.gh-publish-trigger');
-        break;
+          element = await this.driver.$('.gh-publish-trigger');
+          break;
       case "Continue, final review":
           element = await this.driver.$('[data-test-button="continue"]');
           break;
@@ -106,9 +106,6 @@ When(/^I click on the link with text "([^"]*)"$/, async function (linkText) {
       case "programar para publicar luego":
           element = await this.driver.$('.gh-publish-schedule .gh-radio:last-child');
           break;
-      case "Pages":
-          element = await this.driver.$('[data-test-nav="pages"]');
-          break;
       case "Nueva pagina":
           element = await this.driver.$('[data-test-new-page-button]');
           break;
@@ -122,7 +119,31 @@ When(/^I click on the link with text "([^"]*)"$/, async function (linkText) {
           element = await this.driver.$('[data-test-button="confirm-publish"]');
           break;
       default:
-          element = await this.driver.$(`//*[contains(text(), "${linkText}")]`);
+          const postMatch = linkText.match(/^obtener post (.+)$/);
+          if (postMatch) {
+              const postTitle = postMatch[1];
+              const posts = await this.driver.$$('.gh-posts-list-item');
+              
+              for (const post of posts) {
+                  const titleElement = await post.$('.gh-content-entry-title');
+                  const titleText = await titleElement.getText();
+                  
+                  if (titleText.trim() === postTitle) {
+                      element = await post.$('a.gh-list-data.gh-post-list-title');
+                      break;
+                  }
+              }
+              
+              if (!element) {
+                  throw new Error(`No se encontró el post con título "${postTitle}"`);
+              }
+          } else {
+              element = await this.driver.$(`//*[contains(text(), "${linkText}")]`);
+          }
+  }
+
+  if (!element) {
+      throw new Error(`No se pudo encontrar el elemento con el texto "${linkText}"`);
   }
 
   await element.waitForClickable({ timeout: 5000 });
@@ -148,21 +169,25 @@ When('I click settings', async function() {
 })
 
 /*----------------validacion que los post esten en el listado de Posts---------------*/
-When(/^the post "([^"]*)" should be present in the post list$/, async function (tagName) {
-  const tagList = await this.driver.$$('.posts-list');
+When(/^the post "([^"]*)" should be present in the post list$/, async function (postName) {
+  await this.driver.pause(2000);
 
-  const tagPresent = await Promise.all(tagList.map(async (tag) => {
-      const nameElement = await tag.$('.gh-content-entry-title');
-      const nameText = await nameElement.getText();
-      return nameText === tagName;
-  }));
-  const index = tagPresent.indexOf(true);
-  if (index !== -1) {
-      const tagToClick = tagList[index];
-      await tagToClick.click();
-  } else {
-      throw new Error(`El tag "${tagName}" no está presente en la lista.`);
+  const posts = await this.driver.$$('.gh-content-entry-title');
+  
+  let found = false;
+  for (const post of await posts) {
+    const titleText = await post.getText();
+    if (titleText.trim() === postName) {
+      found = true;
+      break;
+    }
   }
+  
+  if (!found) {
+    throw new Error(`El post "${postName}" no está presente en la lista.`);
+  }
+  
+  return true;
 });
 
 When('And I click Publish', async function () {
@@ -224,6 +249,7 @@ When(/^the post "([^"]*)" should be present in the post schedule list$/, async f
 
   return true;
 });
+
 
 /* FIN LISTADO DE STEPS PARA FUNCIONALIDAD DE POSTS*/ 
 

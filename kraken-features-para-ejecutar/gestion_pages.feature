@@ -4,17 +4,15 @@
   @user1 @web
   Scenario: Creación de páginas
     Given I navigate to page "<URL_DASHBOARD>"
-    And I wait for 1 seconds
+    And I wait for 2 seconds
     And I enter email "<USERNAME>"
     And I enter password "<PASSWORD>"
     And I click next
-    And I wait for 1 seconds
-    And I navigate to page "<URL_DASHBOARD>"
-    And I wait for 1 seconds
-    And I click on the link with text "Pages"
-    And I wait for 1 seconds
+    And I wait for 2 seconds
+    And I navigate to page "<URL_PAGES>"
+    And I wait for 2 seconds
     When I click on the link with text "Nueva pagina"
-    And I wait for 1 seconds
+    And I wait for 2 seconds
     And I enter page name "Creación de nueva página"
     And I enter page description "Esto es una prueba de una página nueva"
     And I click on the link with text "Publish pagina"
