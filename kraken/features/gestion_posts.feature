@@ -38,7 +38,7 @@
     And I wait for 1 seconds
     And I click on the link with text "Posts"
     And I wait for 1 seconds
-    When I click on the link with text "Editar primer post"
+    When I click on the link with text "obtener primer post"
     And I wait for 1 seconds
     And I enter post name "Edición de post"
     And I enter post description "Esto es una prueba de una edición de un post"
@@ -48,3 +48,28 @@
     And I wait for 2 seconds
     Then the post "Edición de post" should be present in the post list
     And I wait for 2 seconds
+
+  Feature: Gestión de Posts
+
+  @user3 @web
+  Scenario: Eliminación de un post existente
+    Given I navigate to page "<URL_DASHBOARD>"
+    And I wait for 1 seconds
+    And I enter email "<USERNAME>"
+    And I enter password "<PASSWORD>"
+    And I click next
+    And I wait for 1 seconds
+    And I navigate to page "<URL_DASHBOARD>"
+    And I wait for 1 seconds
+    And I click on the link with text "Posts"
+    And I wait for 1 seconds
+    When I click on the link with text "obtener primer post"
+    And I wait for 1 seconds
+    When I click on the link with text "opciones posts"
+    And I wait for 1 seconds
+    When I click on the link with text "eliminar post modal"
+    And I wait for 1 seconds
+    When I click on the link with text "eliminar post"
+    And I wait for 2 seconds
+    Then the post "Edición de post" should not be present in the post list
+    And I wait for 1 seconds

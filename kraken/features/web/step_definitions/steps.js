@@ -67,18 +67,18 @@ When(/^I click on the link with text "([^"]*)"$/, async function (linkText) {
       case "Posts":
           element = await this.driver.$('#ember19.ember-view[data-test-nav="posts"]');
           break;
-      case "Editar primer post":
+      case "obtener primer post":
           element = await this.driver.$('.gh-posts-list-item-group .gh-posts-list-item a.gh-list-data.gh-post-list-title');
           break;
-      case "Publish":
-          element = await this.driver.$('.gh-publish-trigger');
+      case "opciones posts":
+          element = await this.driver.$('.settings-menu-toggle');
           break;
-      case "Continue, final review":
-          element = await this.driver.$('[data-test-button="continue"]');
-          break;
-      case "Publish post, right now":
-          element = await this.driver.$('[data-test-button="confirm-publish"]');
-          break;
+      case "eliminar post modal": 
+          element = await this.driver.$('[data-test-button="delete-post"]');
+          break; 
+      case "eliminar post": 
+          element = await this.driver.$('[data-test-button="delete-post-confirm"]'); 
+          break; 
       case "Update":
           element = await this.driver.$('[data-test-button="publish-save"]');
           break;
@@ -129,6 +129,24 @@ When(/^the post "([^"]*)" should be present in the post list$/, async function (
 When('And I click Publish', async function () {
   let element = await this.driver.$("//button/span[text()='Publish']");
   return await element.click();
+});
+
+Then(/^the post "([^"]*)" should not be present in the post list$/, async function (postName) {
+  await this.driver.pause(1000);
+  
+  const postsList = await this.driver.$$('.gh-posts-list-item');
+  
+  const postsPresent = await Promise.all(postsList.map(async (post) => {
+      const titleElement = await post.$('.gh-content-entry-title');
+      const titleText = await titleElement.getText();
+      return titleText === postName;
+  }));
+  
+  if (postsPresent.includes(true)) {
+      throw new Error(`El post "${postName}" todavía está presente en la lista cuando debería haber sido eliminado.`);
+  }
+
+  return true;
 });
 
 /* FIN LISTADO DE STEPS PARA FUNCIONALIDAD DE POSTS*/
