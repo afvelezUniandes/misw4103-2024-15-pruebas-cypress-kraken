@@ -3,7 +3,7 @@ describe("Pruebas de sitio", () => {
     cy.login(Cypress.env("username"), Cypress.env("password"));
   });
 
-  it("Ver página del sitio", () => {
+  it("P020 - Ver página del sitio", () => {
     // Navega a la página principal de Ghost
     cy.visit("/ghost/#/dashboard");
 

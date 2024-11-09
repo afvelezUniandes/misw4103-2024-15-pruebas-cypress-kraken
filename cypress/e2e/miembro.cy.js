@@ -3,7 +3,7 @@ describe("Pruebas de miembros", () => {
     cy.login(Cypress.env("username"), Cypress.env("password"));
   });
 
-  it("Crear miembro", () => {
+  it("P017 - Crear miembro", () => {
     cy.visit("/ghost/#/members");
     cy.get('a[data-test-new-member-button="true"]').click();
     cy.get('input[name="name"]').type("Miembro Prueba");
@@ -12,7 +12,7 @@ describe("Pruebas de miembros", () => {
     cy.contains("Saved");
   });
 
-  it("Editar miembro", () => {
+  it("P018 - Editar miembro", () => {
     cy.visit("/ghost/#/members");
     cy.contains("Miembro Prueba").click();
     cy.get('input[name="name"]').clear().type("Miembro Editado");
@@ -20,7 +20,7 @@ describe("Pruebas de miembros", () => {
     cy.contains("Saved");
   });
 
-  it("Eliminar miembro", () => {
+  it("P019 - Eliminar miembro", () => {
     cy.visit("/ghost/#/members");
     cy.contains("Miembro Editado").click();
     cy.get('button[data-test-button="member-actions"]').click();

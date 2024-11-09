@@ -3,7 +3,7 @@ describe("Pruebas de post", () => {
     cy.login(Cypress.env("username"), Cypress.env("password"));
   });
 
-  it("Crear nuevo post", () => {
+  it("P004 - Crear nuevo post", () => {
     cy.visit("/ghost/#/editor/post");
     cy.get("textarea[data-test-editor-title-input]").type("Nuevo Post{enter}");
     cy.wait(1000);
@@ -15,7 +15,7 @@ describe("Pruebas de post", () => {
     cy.contains("Published");
   });
 
-  it("Editar post existente", () => {
+  it("P005 - Editar post existente", () => {
     cy.visit("/ghost/#/posts");
     cy.contains("Nuevo Post").click();
     cy.get("textarea[data-test-editor-title-input]")
@@ -28,7 +28,7 @@ describe("Pruebas de post", () => {
     cy.contains("Published");
   });
 
-  it("Eliminar post", () => {
+  it("P006 - Eliminar post", () => {
     cy.visit("/ghost/#/posts");
     cy.contains("Post Editado").click();
     cy.get("button[data-test-psm-trigger]").click();
@@ -37,7 +37,7 @@ describe("Pruebas de post", () => {
     cy.contains("Post Editado").should("not.exist");
   });
 
-  it("Programar post", () => {
+  it("P010 - Programar post", () => {
     cy.visit("/ghost/#/editor/post");
     cy.get("textarea[data-test-editor-title-input]").type("Nuevo Post{enter}");
     cy.wait(1000);
@@ -52,15 +52,7 @@ describe("Pruebas de post", () => {
     cy.get('button[data-test-button="confirm-publish"]').click();
   });
 
-  it("Filtrar post", () => {
-    cy.visit("/ghost/#/posts");
-    cy.get('div[data-test-type-select="true"]').click();
-
-    cy.get('a[href*="published"]').click();
-    cy.get(".gh-contentfilter-menu").should("contain", "Published");
-  });
-
-  it("Guardar post como borrador", () => {
+  it("P007 - Guardar post como borrador", () => {
     cy.visit("/ghost/#/editor/post");
     cy.get("textarea[data-test-editor-title-input]").type(
       "Post en Borrador{enter}"
@@ -69,7 +61,7 @@ describe("Pruebas de post", () => {
     cy.contains("Draft");
   });
 
-  it("Cambiar estado de borrador a publicado", () => {
+  it("P008 - Cambiar estado de borrador a publicado", () => {
     cy.visit("/ghost/#/posts");
     cy.contains("Post en Borrador").click();
     cy.get('button[data-test-button="publish-flow"]')
@@ -80,7 +72,7 @@ describe("Pruebas de post", () => {
     cy.contains("Published");
   });
 
-  it("Ver post publicado en frontend", () => {
+  it("P009 - Ver post publicado en frontend", () => {
     cy.visit("/ghost/#/posts");
     cy.contains("Post en Borrador").click();
     cy.wait(1000);

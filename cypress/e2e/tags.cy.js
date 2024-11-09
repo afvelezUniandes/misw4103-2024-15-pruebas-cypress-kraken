@@ -3,7 +3,7 @@ describe("Pruebas de tags", () => {
     cy.login(Cypress.env("username"), Cypress.env("password"));
   });
 
-  it("Crear nueva etiqueta", () => {
+  it("P011 - Crear nueva etiqueta", () => {
     cy.visit("/ghost/#/tags");
     cy.get('a[href="#/tags/new/"]').click(); // Navega a la página de creación de etiquetas
     cy.get('input[name="name"]').type("Nueva Etiqueta");
@@ -15,7 +15,7 @@ describe("Pruebas de tags", () => {
     cy.contains("Saved");
   });
 
-  it("Editar etiqueta existente", () => {
+  it("P012 - Editar etiqueta existente", () => {
     cy.visit("/ghost/#/tags");
     cy.contains("Nueva Etiqueta").click();
     cy.get('input[name="name"]').clear().type("Etiqueta Editada");
@@ -23,7 +23,7 @@ describe("Pruebas de tags", () => {
     cy.contains("Saved");
   });
 
-  it("Eliminar etiqueta", () => {
+  it("P013 - Eliminar etiqueta", () => {
     cy.visit("/ghost/#/tags");
     cy.contains("Etiqueta Editada").click();
     cy.get('button[data-test-button="delete-tag"]').click();

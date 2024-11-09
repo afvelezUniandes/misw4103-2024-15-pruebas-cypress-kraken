@@ -3,7 +3,7 @@ describe("Pruebas de página", () => {
     cy.login(Cypress.env("username"), Cypress.env("password"));
   });
 
-  it("Crear nueva página", () => {
+  it("P014 - Crear nueva página", () => {
     cy.visit("/ghost/#/editor/page");
     cy.get("textarea[data-test-editor-title-input]").type(
       "Nueva Página{enter}"
@@ -17,7 +17,7 @@ describe("Pruebas de página", () => {
     cy.contains("Published");
   });
 
-  it("Editar página existente", () => {
+  it("P015 - Editar página existente", () => {
     cy.visit("/ghost/#/pages");
     cy.contains("Nueva Página").click();
     cy.get("textarea[data-test-editor-title-input]")
@@ -30,7 +30,7 @@ describe("Pruebas de página", () => {
     cy.contains("Published");
   });
 
-  it("Eliminar página", () => {
+  it("P016 Eliminar página", () => {
     cy.visit("/ghost/#/pages");
     cy.contains("Página Editada").click();
     cy.get("button[data-test-psm-trigger]").click();
