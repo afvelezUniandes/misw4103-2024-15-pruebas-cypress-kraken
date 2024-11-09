@@ -1,5 +1,5 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
-const properties = require("../../properties.json");
+const properties = require("../properties.json");
 
 Given("Abro Ghost", async function () {
   const baseUrl = properties.BASE_URL;
