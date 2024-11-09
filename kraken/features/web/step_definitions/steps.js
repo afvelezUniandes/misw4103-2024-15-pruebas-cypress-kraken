@@ -67,8 +67,8 @@ When(/^I click on the link with text "([^"]*)"$/, async function (linkText) {
       case "Posts":
           element = await this.driver.$('#ember19.ember-view[data-test-nav="posts"]');
           break;
-      case "New post":
-          element = await this.driver.$('.gh-nav-new-post');
+      case "Editar primer post":
+          element = await this.driver.$('.gh-posts-list-item-group .gh-posts-list-item a.gh-list-data.gh-post-list-title');
           break;
       case "Publish":
           element = await this.driver.$('.gh-publish-trigger');
@@ -78,6 +78,9 @@ When(/^I click on the link with text "([^"]*)"$/, async function (linkText) {
           break;
       case "Publish post, right now":
           element = await this.driver.$('[data-test-button="confirm-publish"]');
+          break;
+      case "Update":
+          element = await this.driver.$('[data-test-button="publish-save"]');
           break;
       default:
           element = await this.driver.$(`//*[contains(text(), "${linkText}")]`);
