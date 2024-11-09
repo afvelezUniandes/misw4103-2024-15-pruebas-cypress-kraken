@@ -70,6 +70,12 @@ When(/^I click on the link with text "([^"]*)"$/, async function (linkText) {
       case "obtener primer post":
           element = await this.driver.$('.gh-posts-list-item-group .gh-posts-list-item a.gh-list-data.gh-post-list-title');
           break;
+      case "obtener primer draft":
+          element = await this.driver.$('.gh-post-list-plain-status:has(.draft) a.gh-list-data.gh-post-list-title');
+          break;
+      case "draft Posts":
+          element = await this.driver.$('[data-test-selected="drafts"]');
+          break;
       case "opciones posts":
           element = await this.driver.$('.settings-menu-toggle');
           break;
@@ -81,6 +87,15 @@ When(/^I click on the link with text "([^"]*)"$/, async function (linkText) {
           break; 
       case "Update":
           element = await this.driver.$('[data-test-button="publish-save"]');
+          break;
+      case "Publish":
+        element = await this.driver.$('.gh-publish-trigger');
+        break;
+      case "Continue, final review":
+          element = await this.driver.$('[data-test-button="continue"]');
+          break;
+      case "Publish post, right now":
+          element = await this.driver.$('[data-test-button="confirm-publish"]');
           break;
       default:
           element = await this.driver.$(`//*[contains(text(), "${linkText}")]`);
