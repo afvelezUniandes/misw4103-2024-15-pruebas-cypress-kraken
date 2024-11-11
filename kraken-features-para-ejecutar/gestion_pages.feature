@@ -2,7 +2,7 @@
   Feature: Gestión de Pages
   
   @user1 @web
-  Scenario: Creación de páginas
+  Scenario: P014 - Creación de páginas
     Given I navigate to page "<URL_DASHBOARD>"
     And I wait for 2 seconds
     And I enter email "<USERNAME>"

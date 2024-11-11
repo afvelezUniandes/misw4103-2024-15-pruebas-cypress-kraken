@@ -1,7 +1,7 @@
   Feature: Gestión de Posts - Parte 1
   
   @user1 @web
-  Scenario: Creación de nuevo post
+  Scenario: P004 - Creación de nuevo post
     Given I navigate to page "<URL_DASHBOARD>"
     And I wait for 2 seconds
     And I enter email "<USERNAME>"
@@ -26,7 +26,7 @@
     And I wait for 2 seconds 
 
   @user2 @web
-  Scenario: Guardar post como borrador
+  Scenario: P007 - Guardar post como borrador
     Given I navigate to page "<URL_DASHBOARD>"
     And I wait for 2 seconds
     And I enter email "<USERNAME>"
@@ -52,7 +52,7 @@
     And I wait for 2 seconds
 
   @user3 @web
-  Scenario: Programación de publicación
+  Scenario: P010 - Programación de publicación
     Given I navigate to page "<URL_DASHBOARD>"
     And I wait for 2 seconds
     And I enter email "<USERNAME>"
@@ -79,7 +79,7 @@
     And I wait for 2 seconds  
 
   @user4 @web
-  Scenario: Edición de un post existente
+  Scenario: P005 - Edición de un post existente
     Given I navigate to page "<URL_DASHBOARD>"
     And I wait for 2 seconds
     And I enter email "<USERNAME>"

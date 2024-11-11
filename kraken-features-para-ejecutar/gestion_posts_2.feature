@@ -1,7 +1,7 @@
   Feature: Gestión de Posts - Parte 2
   
   @user1 @web   
-  Scenario: Previsualización de un post
+  Scenario: P009 - Previsualización de un post
     Given I navigate to page "<URL_DASHBOARD>"
     And I wait for 2 seconds
     And I enter email "<USERNAME>"
@@ -22,7 +22,7 @@
     And I wait for 2 seconds
 
   @user2 @web
-  Scenario: Cambiar estado de borrador a publicado
+  Scenario: P008 - Cambiar estado de borrador a publicado
     Given I navigate to page "<URL_DASHBOARD>"
     And I wait for 2 seconds
     And I enter email "<USERNAME>"
@@ -47,7 +47,7 @@
     And I wait for 2 seconds
 
   @user4 @web
-  Scenario: Eliminación de un post existente
+  Scenario: P006 - Eliminación de un post existente
     Given I navigate to page "<URL_DASHBOARD>"
     And I wait for 2 seconds
     And I enter email "<USERNAME>"
