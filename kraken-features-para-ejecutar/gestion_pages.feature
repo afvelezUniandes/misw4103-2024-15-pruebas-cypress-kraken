@@ -22,4 +22,19 @@
     And I navigate to page "<URL_PAGES>"
     And I wait for 2 seconds
     Then the page "Creación de nueva página" should be present in the page list
-    And I wait for 2 seconds 
+    And I wait for 2 seconds
+
+  @user2 @web
+  Scenario: P015 - Modificación de páginas
+    Given I navigate to page "<URL_DASHBOARD>"
+    And I navigate to page "<URL_PAGES>"
+    When I click on the link with text "Edit page"
+    And I enter page name "Página Modificada"
+    Then the page "Página Modificada" should be present in the page list
+
+  @user3 @web
+  Scenario: P016 - Eliminación de páginas
+    Given I navigate to page "<URL_DASHBOARD>"
+    And I navigate to page "<URL_PAGES>"
+    When I click on the link with text "Delete Page"
+    Then the page should not be present in the page list

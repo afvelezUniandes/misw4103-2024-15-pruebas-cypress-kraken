@@ -265,6 +265,39 @@ When('I enter page description {kraken-string}', async function (description) {
   let element = await this.driver.$('.kg-prose[contenteditable="true"]');
   return await element.setValue(description);
 });
+/*----------Edición de Pages---------------------*/
+When("I edit page name to {kraken-string}", async function (modifiedName) {
+  let element = await this.driver.$('textarea[data-test-editor-title-input]');
+  return await element.setValue(modifiedName);
+});
+
+/*----------Eliminación de Pages---------------------*/
+When("I delete the page", async function () {
+  let settingsButton = await this.driver.$('.settings-menu-toggle');
+  await settingsButton.click();
+
+  let deleteButton = await this.driver.$('button.gh-btn.gh-btn-red.gh-btn-icon');
+  await deleteButton.click();
+
+  let confirmDeleteButton = await this.driver.$('button.gh-btn.gh-btn-red');
+  await confirmDeleteButton.click();
+});
+
+Then(/^the page "([^"]*)" should not be present in the page list$/, async function (pageName) {
+  await this.driver.pause(2000);
+
+  const pages = await this.driver.$$('.gh-list-row h3.gh-content-entry-title');
+  const pagesFound = await Promise.all(pages.map(async (titleElement) => {
+    const titleText = await titleElement.getText();
+    return titleText === pageName;
+  }));
+
+  if (pagesFound.includes(true)) {
+    throw new Error(`La página "${pageName}" todavía está presente en la lista cuando debería haber sido eliminada.`);
+  }
+
+  return true;
+});
 
 /*----------------validacion que los post esten en el listado de Posts---------------*/
 Then(/^the page "([^"]*)" should be present in the page list$/, async function (pageName) {
@@ -284,3 +317,61 @@ Then(/^the page "([^"]*)" should be present in the page list$/, async function (
   return true;
 });
 /* FIN LISTADO DE STEPS PARA FUNCIONALIDAD DE PAGES*/ 
+/*---------------STEPS PARA Tags------------------------------
+/*----------Creacion de tags---------------------*/
+When("I create tag with name {kraken-string}", async function (tagName) {
+  await this.driver.$('button.gh-btn.gh-btn-primary').click();
+  await this.driver.$('input[name="name"]').setValue(tagName);
+  await this.driver.$('button.gh-btn.gh-btn-primary.gh-btn-icon.ember-view').click();
+});
+/*----------Edición de tags---------------------*/
+When("I edit tag to name {kraken-string}", async function (tagName) {
+  await this.driver.$('.gh-tag-list-name').click();
+  let element = await this.driver.$('input[name="name"]');
+  await element.setValue(tagName);
+  await this.driver.$('button.gh-btn.gh-btn-primary.gh-btn-icon.ember-view').click();
+});
+/*----------Eliminación de tags---------------------*/
+When("I delete tag", async function () {
+  await this.driver.$('button.gh-btn.gh-btn-red.gh-btn-icon').click();
+  await this.driver.$('button.gh-btn.gh-btn-red').click();
+});
+
+
+/* FIN LISTADO DE STEPS PARA FUNCIONALIDAD DE TAGS*/ 
+/*---------------STEPS PARA members------------------------------
+/*----------Creacion de member---------------------*/
+When("I create member with name {kraken-string}", async function (memberName) {
+  await this.driver.$('button.gh-btn.gh-btn-primary').click();
+  await this.driver.$('input[name="name"]').setValue(memberName);
+  await this.driver.$('button.gh-btn.gh-btn-primary.gh-btn-icon.ember-view').click();
+});
+/*----------Edición de member---------------------*/
+When("I edit member to name {kraken-string}", async function (memberName) {
+  await this.driver.$('.gh-member-list-name').click();
+  let element = await this.driver.$('input[name="name"]');
+  await element.setValue(memberName);
+  await this.driver.$('button.gh-btn.gh-btn-primary.gh-btn-icon.ember-view').click();
+});
+/*----------Eliminación de member---------------------*/
+When("I delete member", async function () {
+  await this.driver.$('button.gh-btn.gh-btn-red.gh-btn-icon').click();
+  await this.driver.$('button.gh-btn.gh-btn-red').click();
+});
+/* FIN LISTADO DE STEPS PARA FUNCIONALIDAD DE MEMBERS*/ 
+/*---------------STEPS PARA site------------------------------
+/*----------Ver sitio---------------------*/
+When("I click on the link with text {kraken-string}", async function (linkText) {
+  const element = await this.driver.$(`//*[contains(text(), "${linkText}")]`);
+  await element.waitForClickable({ timeout: 5000 });
+  return await element.click();
+});
+
+Then("I should be redirected to the live site {kraken-string}", async function (expectedUrl) {
+  await this.driver.pause(2000);
+  const currentUrl = await this.driver.getUrl();
+
+  if (!currentUrl.includes(expectedUrl)) {
+    throw new Error(`Expected to be on "${expectedUrl}", but was redirected to "${currentUrl}"`);
+  }
+});
